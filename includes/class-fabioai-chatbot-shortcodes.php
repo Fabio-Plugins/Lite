@@ -421,7 +421,18 @@ class FabioAIChatbot_Shortcodes {
             'we', 'our', 'us', 'they', 'them', 'their', 'he', 'she', 'his', 'her', 'there', 'here'
         ];
 
-// Filtrer d'abord avec les stopwords existantes
+// Liste locale de mots vides pour la langue du site (+ anglais) : aucun appel a l'IA.
+// Si la langue du site n'a pas de liste locale, ancien comportement (filtre via l'IA).
+        $local_stopwords = fabioai_chatbot_get_stopwords($site_lang);
+
+        if ($local_stopwords !== null) {
+            $stopword_lookup = array_flip(array_merge($local_stopwords, fabioai_chatbot_get_stopwords('en') ?? []));
+
+            $keywords = array_values(array_filter($words, function($word) use ($stopword_lookup) {
+                return mb_strlen($word) >= 2 && !isset($stopword_lookup[$word]);
+            }));
+        } else {
+        // Filtrer d'abord avec les stopwords existantes
         $keywords = array_values(array_filter($words, function($word) use ($stopwords) {
             return mb_strlen($word) >= 2 && !in_array($word, $stopwords, true);
         }));
@@ -452,6 +463,7 @@ class FabioAIChatbot_Shortcodes {
                 }
             }
             $keywords = $filtered_keywords;
+        }
         }
 
         // Normaliser TOUS les mots-clés (même ceux non traduits)

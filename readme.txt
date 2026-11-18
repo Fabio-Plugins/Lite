@@ -4,7 +4,7 @@ Tags: ai chatbot, chatgpt, wordpress chatbot, site search, ai search, anthropic,
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -181,6 +181,9 @@ No cookies and no personal data such as IP addresses, names or email addresses. 
 
 == Changelog ==
 
+= 1.3.1 =
+* Improved: faster answers. The chatbot no longer calls the AI provider to filter the question's stop words; it uses a built-in list for the site language (English, French, German, Italian, Spanish, Portuguese). Other languages keep the previous behavior.
+
 = 1.3.0 =
 * New: bbPress display setting in step 4 of the settings page (shown when bbPress is active). On forum pages, choose "Same as above", "Automatic insertion" (top of the forum home, each forum, topic and reply page) or "Floating bubble".
 * New: the conversation now follows the visitor between the chatbot inserted in the content and the floating bubble, for example from a page to the forum, within the same browser tab.
@@ -262,6 +265,9 @@ No cookies and no personal data such as IP addresses, names or email addresses. 
 * Initial submission of Fabio AI ChatBot Lite.
 
 == Upgrade Notice ==
+
+= 1.3.1 =
+Faster answers for sites in English, French, German, Italian, Spanish or Portuguese.
 
 = 1.3.0 =
 New: choose how the chatbot appears on bbPress forum pages, keep one conversation between the inserted chatbot and the floating bubble, and get up to 3 helpful alternatives when the site has no answer. A conversation in progress restarts once after updating. After updating, run a manual site scan from the plugin settings page.
