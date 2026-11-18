@@ -1,0 +1,495 @@
+/* Fabio AI ChatBot Lite - Conversations, intentions et nuage de mots (page Analytics) */
+
+/* 6 cartes d'indicateurs au lieu de 4 */
+.fabioai-chatbot-kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.fabioai-chatbot-kpi-value-text {
+    font-size: 20px;
+}
+
+/* ===== Conversations ===== */
+.fabioai-chatbot-conv-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.fabioai-chatbot-conv-stat {
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #f8fafc;
+}
+
+.fabioai-chatbot-conv-stat span {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.fabioai-chatbot-conv-stat strong {
+    font-size: 24px;
+    line-height: 1.1;
+    color: #0f172a;
+}
+
+.fabioai-chatbot-conv-notice {
+    display: none;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border: 1px solid #fde68a;
+    border-left: 4px solid #f59e0b;
+    border-radius: 10px;
+    background: #fffbeb;
+    color: #78350f;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.fabioai-chatbot-conv-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.fabioai-chatbot-conv-controls label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.fabioai-chatbot-conv-controls select {
+    min-height: 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.fabioai-chatbot-conv-row {
+    cursor: pointer;
+}
+
+.fabioai-chatbot-conv-row:focus {
+    outline: 2px solid #60a5fa;
+    outline-offset: -2px;
+}
+
+.fabioai-chatbot-conv-date strong,
+.fabioai-chatbot-conv-date span {
+    display: block;
+    white-space: nowrap;
+}
+
+.fabioai-chatbot-conv-date span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.fabioai-chatbot-conv-question {
+    font-weight: 600;
+}
+
+.fabioai-chatbot-conv-more,
+.fabioai-chatbot-conv-legacy {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.fabioai-chatbot-conv-legacy {
+    background: #fffbeb;
+    color: #92400e;
+}
+
+.fabioai-chatbot-conv-page {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    color: #475569;
+}
+
+.fabioai-chatbot-conv-muted {
+    color: #94a3b8;
+}
+
+.fabioai-chatbot-click-pill {
+    display: inline-block;
+    min-width: 46px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.fabioai-chatbot-click-pill.is-yes {
+    background: #ecfdf5;
+    color: #15803d;
+}
+
+.fabioai-chatbot-click-pill.is-no {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.fabioai-chatbot-click-pill.is-none {
+    background: transparent;
+    color: #94a3b8;
+}
+
+.fabioai-chatbot-intent {
+    display: inline-block;
+    margin: 0 4px 4px 0;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.fabioai-chatbot-intent-purchase { background: #ecfdf5; color: #15803d; }
+.fabioai-chatbot-intent-price { background: #fefce8; color: #a16207; }
+.fabioai-chatbot-intent-delivery { background: #f0f9ff; color: #0369a1; }
+.fabioai-chatbot-intent-support { background: #f5f3ff; color: #6d28d9; }
+.fabioai-chatbot-intent-comparison { background: #fdf4ff; color: #a21caf; }
+.fabioai-chatbot-intent-contact { background: #ecfeff; color: #0e7490; }
+.fabioai-chatbot-intent-complaint { background: #fef2f2; color: #b91c1c; }
+.fabioai-chatbot-intent-off_topic { background: #f1f5f9; color: #64748b; }
+
+#fabioai-chatbot-conv-pagination {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ===== Panneau latéral ===== */
+.fabioai-chatbot-conv-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(15, 23, 42, 0.35);
+}
+
+.fabioai-chatbot-conv-overlay.is-open {
+    display: block;
+}
+
+.fabioai-chatbot-conv-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100001;
+    width: 540px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    box-shadow: -16px 0 40px rgba(15, 23, 42, 0.2);
+    transform: translateX(105%);
+    transition: transform 0.22s ease;
+}
+
+.fabioai-chatbot-conv-drawer.is-open {
+    transform: translateX(0);
+}
+
+.fabioai-chatbot-conv-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.fabioai-chatbot-conv-drawer-header h2 {
+    margin: 0;
+    font-size: 17px;
+    color: #0f172a;
+}
+
+#fabioai-chatbot-conv-drawer-close {
+    border: 0;
+    background: #f1f5f9;
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #334155;
+}
+
+#fabioai-chatbot-conv-drawer-close:hover {
+    background: #e2e8f0;
+}
+
+.fabioai-chatbot-conv-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 22px 40px;
+}
+
+.fabioai-chatbot-drawer-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.fabioai-chatbot-drawer-summary > div {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.fabioai-chatbot-drawer-summary span {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 3px;
+}
+
+.fabioai-chatbot-drawer-summary strong {
+    font-size: 13px;
+    color: #0f172a;
+    word-break: break-all;
+}
+
+.fabioai-chatbot-drawer-legacy {
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #fffbeb;
+    color: #78350f;
+    font-size: 13px;
+}
+
+.fabioai-chatbot-drawer-exchange {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.fabioai-chatbot-drawer-exchange:last-child {
+    border-bottom: 0;
+}
+
+.fabioai-chatbot-drawer-meta {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.fabioai-chatbot-drawer-q {
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    border-radius: 14px 14px 4px 14px;
+    background: #ede9fe;
+    color: #3b0764;
+    font-weight: 600;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.fabioai-chatbot-drawer-a {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 14px 14px 14px 4px;
+    background: #f4f6ff;
+    color: #1e293b;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.fabioai-chatbot-drawer-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fabioai-chatbot-drawer-link {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 6px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.fabioai-chatbot-drawer-link-main {
+    min-width: 0;
+}
+
+.fabioai-chatbot-drawer-link-main a {
+    display: block;
+    font-weight: 600;
+    color: #2271b1;
+    text-decoration: none;
+    word-break: break-word;
+}
+
+.fabioai-chatbot-drawer-link-main a:hover {
+    text-decoration: underline;
+}
+
+.fabioai-chatbot-drawer-link-main small {
+    color: #94a3b8;
+}
+
+.fabioai-chatbot-link-state {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.fabioai-chatbot-link-state.is-clicked {
+    color: #15803d;
+}
+
+.fabioai-chatbot-link-state.is-not-clicked {
+    color: #94a3b8;
+}
+
+@media (max-width: 900px) {
+    .fabioai-chatbot-conv-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 782px) {
+    .fabioai-chatbot-conv-table thead {
+        display: none;
+    }
+
+    .fabioai-chatbot-conv-page {
+        max-width: none;
+        white-space: normal;
+    }
+}
+
+/* ===== What Visitors Want (intentions) ===== */
+.fabioai-chatbot-intent-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 110px;
+    align-items: center;
+    gap: 14px;
+    padding: 7px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.fabioai-chatbot-intent-row:last-child {
+    border-bottom: 0;
+}
+
+.fabioai-chatbot-intent-bar {
+    height: 10px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    overflow: hidden;
+}
+
+.fabioai-chatbot-intent-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: #3b82f6;
+}
+
+.fabioai-chatbot-intent-fill-purchase { background: #16a34a; }
+.fabioai-chatbot-intent-fill-price { background: #ca8a04; }
+.fabioai-chatbot-intent-fill-delivery { background: #0284c7; }
+.fabioai-chatbot-intent-fill-support { background: #7c3aed; }
+.fabioai-chatbot-intent-fill-comparison { background: #c026d3; }
+.fabioai-chatbot-intent-fill-contact { background: #0891b2; }
+.fabioai-chatbot-intent-fill-complaint { background: #dc2626; }
+.fabioai-chatbot-intent-fill-off_topic { background: #94a3b8; }
+
+.fabioai-chatbot-intent-count {
+    text-align: right;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.fabioai-chatbot-intent-count small {
+    font-weight: 500;
+    color: #64748b;
+}
+
+.fabioai-chatbot-intents-analyze {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    background: #eff6ff;
+}
+
+.fabioai-chatbot-intents-analyze p {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #1e3a8a;
+}
+
+.fabioai-chatbot-intents-progress {
+    margin-left: 10px;
+    font-size: 13px;
+    color: #334155;
+}
+
+@media (max-width: 782px) {
+    .fabioai-chatbot-intent-row {
+        grid-template-columns: 110px 1fr 80px;
+        gap: 8px;
+    }
+}
+
+/* ===== Nuage de mots ===== */
+.fabioai-chatbot-word-cloud { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 6px 14px; padding: 12px 4px; line-height: 1.25; }
+.fabioai-chatbot-cloud-word { background: none; border: 0; padding: 2px 4px; cursor: pointer; font-family: inherit; border-radius: 4px; transition: background .15s; }
+.fabioai-chatbot-cloud-word:hover, .fabioai-chatbot-cloud-word:focus { background: #f0f6fc; outline: none; text-decoration: underline; }
+.fabioai-chatbot-cloud-word.level-0 { color: #8c8f94; }
+.fabioai-chatbot-cloud-word.level-1 { color: #50575e; }
+.fabioai-chatbot-cloud-word.level-2 { color: #2271b1; }
+.fabioai-chatbot-cloud-word.level-3 { color: #135e96; font-weight: 600; }
+.fabioai-chatbot-cloud-word.level-4 { color: #0a4b78; font-weight: 700; }
+
+/* ===== Pastilles d'intention ===== */
+.fabioai-chatbot-intent-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px; }
+.fabioai-chatbot-intent-chip { border: 1px solid #c3c4c7; background: #fff; color: #1d2327; border-radius: 999px; padding: 4px 12px; font-size: 13px; line-height: 1.4; cursor: pointer; font-family: inherit; }
+.fabioai-chatbot-intent-chip span { display: inline-block; margin-left: 4px; padding: 0 6px; border-radius: 999px; background: #f0f0f1; font-size: 12px; font-weight: 600; }
+.fabioai-chatbot-intent-chip:hover:not(:disabled) { border-color: #2271b1; color: #2271b1; }
+.fabioai-chatbot-intent-chip.is-active { background: #2271b1; border-color: #2271b1; color: #fff; }
+.fabioai-chatbot-intent-chip.is-active span { background: rgba(255,255,255,.25); color: #fff; }
+.fabioai-chatbot-intent-chip.is-empty { opacity: .45; cursor: default; }
+.fabioai-chatbot-intent-chip-hint { margin-left: 6px; font-size: 12px; color: #646970; font-style: italic; }
+.fabioai-chatbot-intent-row.is-clickable { cursor: pointer; border-radius: 4px; }
+.fabioai-chatbot-intent-row.is-clickable:hover { background: #f6f7f7; }
+.fabioai-chatbot-intent-row.is-selected { background: #f0f6fc; }

@@ -1,0 +1,612 @@
+/* ==============================
+   AI Chatbot – CSS V1
+   Adapted to fabioai-chatbot-* structure
+   ============================== */
+
+   #fabioai-chatbot {
+    width: 100%;
+    margin: 40px auto;
+    max-width: 900px;
+  }
+
+  .fabioai-chatbot-inner {
+
+    --border-radius: 14px;
+    --border-width: 2px;
+    --border-color: var(--fabioai-chatbot-border-color, #ff6a00);
+    --spacing: 12px;
+
+    --bg-user: var(--fabioai-chatbot-user-bg, #6c5ce7);
+    --bg-bot: var(--fabioai-chatbot-bot-bg, #f4f6ff);
+
+    font-family: inherit;
+    color: inherit;
+
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+
+    background: var(--fabioai-chatbot-bg-color, #ffffff);
+
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+/* Message area */
+#fabioai-chatbot-chat-messages {
+  padding: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Messages injected by JS */
+.fabioai-chatbot-message {
+  display: flex;
+}
+
+/* User message */
+.fabioai-chatbot-message.user {
+  justify-content: flex-end;
+}
+
+/* Bot message */
+.fabioai-chatbot-message.bot {
+  justify-content: flex-start;
+}
+
+.fabioai-chatbot-message.bot,
+.fabioai-chatbot-message.user {
+  line-height: 1.6;
+}
+
+/* Bubble */
+.fabioai-chatbot-bubble {
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  max-width: 100%;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.fabioai-chatbot-message.user .fabioai-chatbot-bubble {
+  background: var(--bg-user);
+}
+
+.fabioai-chatbot-message.bot .fabioai-chatbot-bubble {
+  background: var(--bg-bot);
+}
+
+/* Form */
+#fabioai-chatbot-chat-form {
+  display: flex;
+  gap: 8px;
+  padding: var(--spacing);
+  border-top: 1px solid #ffffff;
+}
+
+#fabioai-chatbot-chat-input {
+  flex: 1;
+  font-family: inherit;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--fabioai-chatbot-input-bg-color, #ffffff);
+  border: 1px solid #c0c0c0; /* gris argenté */
+}
+
+#fabioai-chatbot-chat-input:focus {
+  outline: none;
+  border-color: #a8a8a8;
+  box-shadow: 0 0 0 2px rgba(192,192,192,0.2);
+}
+
+#fabioai-chatbot-chat-form button {
+  font-family: inherit;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  background: var(--fabioai-chatbot-button-bg, #38bdf8);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+#fabioai-chatbot-chat-form button::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: white;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2 21l21-9L2 3v7l15 2-15 2z'/%3E%3C/svg%3E") no-repeat center;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2 21l21-9L2 3v7l15 2-15 2z'/%3E%3C/svg%3E") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+#fabioai-chatbot-chat-form button:hover {
+  background: var(--fabioai-chatbot-button-hover-color, #0ea5e9);
+  transform: scale(1.05);
+}
+
+/* ==============================
+   Floating Bubble Mode
+============================== */
+
+#fabioai-chatbot-floating-wrapper {
+  position: fixed;
+  bottom: 20px;
+  z-index: 999999;
+  pointer-events: auto;
+}
+
+#fabioai-chatbot-floating-bubble {
+  pointer-events: auto;
+}
+
+.fabioai-chatbot-position-right {
+  right: 20px;
+}
+
+.fabioai-chatbot-position-left {
+  left: 20px;
+}
+
+/* Bulle ronde */
+#fabioai-chatbot-floating-bubble {
+  width: 110px;
+  height: 110px;
+  background: var(--fabioai-chatbot-bubble-color, #ff6a00);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 28px;
+}
+
+#fabioai-chatbot-floating-bubble svg {
+  width: 74px;
+  height: 74px;
+  display: block;
+}
+
+#fabioai-chatbot-floating-bubble img {
+  width: 74px;
+  height: 74px;
+  display: block;
+}
+
+/* Fenêtre cachée par défaut */
+#fabioai-chatbot-floating-chat {
+  width: min(550px, calc(100vw - 40px));
+  max-width: calc(100vw - 40px);
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+
+  #fabioai-chatbot-floating-wrapper {
+    right: 12px !important;
+    left: auto !important;
+    bottom: 12px !important;
+    width: auto !important;
+    height: auto !important;
+    inset: auto 12px 12px auto !important;
+  }
+
+  #fabioai-chatbot-floating-wrapper.fabioai-chatbot-position-left {
+    left: 12px !important;
+    right: auto !important;
+    inset: auto auto 12px 12px !important;
+  }
+
+  #fabioai-chatbot-floating-bubble {
+    width: 92px;
+    height: 92px;
+    font-size: 24px;
+  }
+
+  #fabioai-chatbot-floating-bubble svg {
+    width: 66px;
+    height: 66px;
+  }
+
+  #fabioai-chatbot-floating-bubble img {
+    width: 66px;
+    height: 66px;
+  }
+
+  #fabioai-chatbot-floating-chat {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+    background: var(--fabioai-chatbot-bg-color, #ffffff) !important;
+  }
+
+  #fabioai-chatbot {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+  }
+
+  .fabioai-chatbot-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  #fabioai-chatbot-close-chat {
+    flex: 0 0 42px !important;
+    margin: 8px auto 10px auto !important;
+  }
+
+  #fabioai-chatbot-chat-form {
+    flex: 0 0 auto !important;
+    padding: 10px !important;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px) !important;
+  }
+
+  #fabioai-chatbot-chat-messages {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+  }
+}
+
+.fabioai-chatbot-hidden {
+  display: none;
+}
+
+/* =========================
+   True Progressive Height System
+========================= */
+
+.fabioai-chatbot-inner {
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#fabioai-chatbot-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* =========================
+   Close Button
+========================= */
+
+#fabioai-chatbot-close-chat {
+  width: 42px;
+  height: 42px;
+  margin: 12px auto 16px auto;
+  border-radius: 50%;
+  border: none;
+  background: var(--fabioai-chatbot-bubble-color, #ff6a00);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#fabioai-chatbot-close-chat:hover {
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+.fabioai-chatbot-timer {
+  font-size: 12px;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* =========================
+   Fix BBPress / mobile
+========================= */
+
+#fabioai-chatbot-chat-form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+}
+
+#fabioai-chatbot-chat-input {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  display: block !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  height: 44px !important;
+}
+
+#fabioai-chatbot-chat-form button {
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  min-width: 44px !important;
+  max-width: 44px !important;
+  height: 44px !important;
+  margin: 0 !important;
+}
+
+/* Fix visibilité icône send */
+#fabioai-chatbot-chat-form button::before {
+  content: "";
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2 21l21-9L2 3v7l15 2-15 2z'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2 21l21-9L2 3v7l15 2-15 2z'/%3E%3C/svg%3E") no-repeat center / contain !important;
+}
+
+#fabioai-chatbot-chat-form button {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+/* =========================
+   Better readability - generic
+========================= */
+
+.fabioai-chatbot-message.bot .fabioai-chatbot-bubble {
+  padding: 16px 18px;
+  line-height: 1.72;
+  font-size: 0.97em;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.fabioai-chatbot-message.user .fabioai-chatbot-bubble {
+  line-height: 1.5;
+}
+
+.fabioai-chatbot-timer {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  opacity: 0.65;
+  font-style: normal;
+}
+
+.fabioai-chatbot-sources {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.fabioai-chatbot-sources-title {
+  margin-bottom: 8px;
+  font-size: 0.92em;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.fabioai-chatbot-sources ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.fabioai-chatbot-sources li {
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+
+.fabioai-chatbot-sources a {
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+/* =========================
+   Gradient Finish
+========================= */
+
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled .fabioai-chatbot-inner {
+  background: linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-bg-color, #ffffff),
+    color-mix(in srgb, var(--fabioai-chatbot-bg-color, #ffffff) 85%, #000000)
+  );
+}
+
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled .fabioai-chatbot-message.user .fabioai-chatbot-bubble {
+  background: linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-user-bg, #6c5ce7),
+    color-mix(in srgb, var(--fabioai-chatbot-user-bg, #6c5ce7) 75%, #ffffff)
+  );
+}
+
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled .fabioai-chatbot-message.bot .fabioai-chatbot-bubble {
+  background: linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-bot-bg, #f4f6ff),
+    color-mix(in srgb, var(--fabioai-chatbot-bot-bg, #f4f6ff) 85%, #000000)
+  );
+}
+
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled #fabioai-chatbot-chat-input {
+  background: linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-input-bg-color, #ffffff),
+    color-mix(in srgb, var(--fabioai-chatbot-input-bg-color, #ffffff) 92%, #000000)
+  );
+}
+
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled #fabioai-chatbot-chat-form button {
+  background: linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-button-bg, #38bdf8),
+    color-mix(in srgb, var(--fabioai-chatbot-button-bg, #38bdf8) 70%, #000000)
+  );
+}
+
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled #fabioai-chatbot-close-chat,
+body.fabioai-chatbot-gradients-enabled #fabioai-chatbot-floating-bubble {
+  background: linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-bubble-color, #ff6a00),
+    color-mix(in srgb, var(--fabioai-chatbot-bubble-color, #ff6a00) 70%, #000000)
+  );
+}
+
+/* Gradient border */
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled .fabioai-chatbot-inner {
+  border-color: transparent;
+  background:
+  linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-bg-color, #ffffff),
+    color-mix(in srgb, var(--fabioai-chatbot-bg-color, #ffffff) 85%, #000000)
+  ) padding-box,
+  linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-border-color, #ff6a00),
+    color-mix(in srgb, var(--fabioai-chatbot-border-color, #ff6a00) 70%, #000000)
+  ) border-box;
+}
+
+/* Soft gradient */
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled.fabioai-chatbot-gradient-soft .fabioai-chatbot-inner {
+  background:
+  linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-bg-color, #ffffff),
+    color-mix(in srgb, var(--fabioai-chatbot-bg-color, #ffffff) 92%, #ffffff)
+  ) padding-box,
+  linear-gradient(
+    135deg,
+    var(--fabioai-chatbot-border-color, #ff6a00),
+    color-mix(in srgb, var(--fabioai-chatbot-border-color, #ff6a00) 80%, #ffffff)
+  ) border-box;
+}
+
+/* Vivid gradient */
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled.fabioai-chatbot-gradient-vivid .fabioai-chatbot-message.user .fabioai-chatbot-bubble,
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled.fabioai-chatbot-gradient-vivid #fabioai-chatbot-chat-form button,
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled.fabioai-chatbot-gradient-vivid #fabioai-chatbot-close-chat,
+body.fabioai-chatbot-gradients-enabled.fabioai-chatbot-gradient-vivid #fabioai-chatbot-floating-bubble {
+  filter: saturate(1.15);
+}
+
+/* Premium gradient */
+#fabioai-chatbot.fabioai-chatbot-gradients-enabled.fabioai-chatbot-gradient-premium .fabioai-chatbot-inner {
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.14);
+}
+
+/* Mode réduit (conversation restaurée) : hauteur automatique, sinon le haut
+   du premier message est rogné et colle à la bordure du chatbot. */
+#fabioai-chatbot.fabioai-chatbot-collapsed #fabioai-chatbot-chat-messages {
+  max-height: none;
+  overflow: hidden;
+}
+
+#fabioai-chatbot.fabioai-chatbot-collapsed #fabioai-chatbot-chat-messages .fabioai-chatbot-message:not(:first-child) {
+  display: none;
+}
+
+#fabioai-chatbot.fabioai-chatbot-collapsed #fabioai-chatbot-thinking {
+  display: none !important;
+}
+
+.fabioai-chatbot-footer {
+  text-align: center;
+  padding: 6px var(--spacing) 10px;
+  font-size: 11px;
+  opacity: 0.55;
+}
+/* ==============================
+   Shadow & Elevation
+   ============================== */
+
+/* None */
+#fabioai-chatbot.fabioai-chatbot-shadow-none .fabioai-chatbot-inner,
+body.fabioai-chatbot-shadow-none #fabioai-chatbot-floating-bubble {
+  box-shadow: none;
+}
+
+/* Soft (default) */
+#fabioai-chatbot.fabioai-chatbot-shadow-soft .fabioai-chatbot-inner {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+body.fabioai-chatbot-shadow-soft #fabioai-chatbot-floating-bubble {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Elevated */
+#fabioai-chatbot.fabioai-chatbot-shadow-elevated .fabioai-chatbot-inner {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+body.fabioai-chatbot-shadow-elevated #fabioai-chatbot-floating-bubble {
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.35);
+}
+
+/* Glow */
+#fabioai-chatbot.fabioai-chatbot-shadow-glow .fabioai-chatbot-inner {
+  box-shadow: 0 0 28px color-mix(in srgb, var(--fabioai-chatbot-border-color, #ff6a00) 55%, transparent);
+}
+body.fabioai-chatbot-shadow-glow #fabioai-chatbot-floating-bubble {
+  box-shadow: 0 0 26px color-mix(in srgb, var(--fabioai-chatbot-bubble-color, #ff6a00) 65%, transparent);
+}
+
+/* Sources : pas de puces, pas de retrait, alignées à gauche */
+.fabioai-chatbot-sources,
+.fabioai-chatbot-sources-title {
+  text-align: left;
+}
+
+.fabioai-chatbot-bubble .fabioai-chatbot-sources ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  text-align: left !important;
+}
+
+.fabioai-chatbot-bubble .fabioai-chatbot-sources li {
+  margin: 0 0 6px 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  text-align: left !important;
+  line-height: 1.45;
+}
+
+.fabioai-chatbot-bubble .fabioai-chatbot-sources li::before,
+.fabioai-chatbot-bubble .fabioai-chatbot-sources li::marker {
+  content: none !important;
+}
