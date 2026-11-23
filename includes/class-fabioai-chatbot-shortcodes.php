@@ -385,19 +385,20 @@ class FabioAIChatbot_Shortcodes {
         $words = array_filter(explode(' ', $question));
 
         // =========================
-        // 2.5 Strict site language rule
+        // 2.5 Answer language: the user's language, site language as fallback
         // =========================
         $locale = function_exists('determine_locale') ? determine_locale() : get_locale();
         $site_lang = strtolower(substr($locale, 0, 2));
 
         $language_instruction = "
         The user may ask questions in any language.
-        Understand the user's intent across languages, including synonyms, translations, spelling variants, and mixed-language questions.
+        Understand the user's intent across languages, including synonyms, translations, spelling variants, misspelled words, and mixed-language questions.
         Internal keyword lists are only retrieval and scoring helpers.
         They must not restrict understanding to French or English.
-        Answer only in the website language: $site_lang.
-        Ignore the user's language for the final answer language.
-        Do not translate the final answer into another language.
+        Answer in the language of the user's QUESTION.
+        The CONTEXT and the sources may be written in a different language: never let their language decide the language of the answer. Translate the relevant information into the user's language.
+        If you cannot determine the user's language with certainty (for example a very short message, a single word, a name, or heavy misspelling), answer in the website language: $site_lang.
+        Never mix languages inside one answer.
         ";
 
         // =========================
