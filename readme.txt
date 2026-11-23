@@ -4,7 +4,7 @@ Tags: ai chatbot, chatgpt, wordpress chatbot, site search, ai search, anthropic,
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Most websites lose 80% of their visitors because they don't find what they are l
 
 https://youtu.be/dl5Ef9bUrro
 
-Fabio AI ChatBot Lite is a WordPress plugin that installs an AI-powered chatbot to help visitors quickly find accurate information on your website. Fabio AI ChatBot Lite answers exclusively from your WordPress, WooCommerce, and bbPress content. The chatbot never uses external knowledge or the public internet. Fabio Lite answers in your WordPress installation language, fitting nearly all languages on earth. Icing on the cake : the analytics features.
+Fabio AI ChatBot Lite is a WordPress plugin that installs an AI-powered chatbot to help visitors quickly find accurate information on your website. Fabio AI ChatBot Lite answers exclusively from your WordPress, WooCommerce, and bbPress content. The chatbot never uses external knowledge or the public internet. Fabio Lite answers in the language of the visitor's question (or in your WordPress installation language when the visitor's language cannot be determined), fitting nearly all languages on earth. Icing on the cake : the analytics features.
 
 You choose which AI provider generates the answers: OpenAI, Google Gemini, Mistral AI, or Anthropic (Claude). Bring your own API key from any of these providers. The cost with entry-level models is about 1 USD for 300 conversations (questions and answers).
 
@@ -27,7 +27,7 @@ A live demo site is available at [getfreeplugins.com](https://getfreeplugins.com
 Key principles:
 
 * ✅ Answers based only on scanned website content
-* 🌍 Answers in your WordPress installation language
+* 🌍 Answers in the visitor's language, with your WordPress installation language as fallback
 * 🔄 Manual or automatic site scanning
 * 💬 Unlimited conversations
 * ⬇️ Unlimited conversation download
@@ -181,6 +181,9 @@ No cookies and no personal data such as IP addresses, names or email addresses. 
 
 == Changelog ==
 
+= 1.4.0 =
+* Improved: the chatbot now answers in the language of the visitor's question instead of always using the site language. The language of your content never decides the answer language. If the visitor's language cannot be determined (very short message, single word, heavy misspelling), it answers in your WordPress installation language.
+
 = 1.3.1 =
 * Improved: faster answers. The chatbot no longer calls the AI provider to filter the question's stop words; it uses a built-in list for the site language (English, French, German, Italian, Spanish, Portuguese). Other languages keep the previous behavior.
 
@@ -265,6 +268,9 @@ No cookies and no personal data such as IP addresses, names or email addresses. 
 * Initial submission of Fabio AI ChatBot Lite.
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+The chatbot now answers in the language of the visitor's question, and falls back to the site language when it cannot tell.
 
 = 1.3.1 =
 Faster answers for sites in English, French, German, Italian, Spanish or Portuguese.

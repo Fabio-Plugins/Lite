@@ -3,7 +3,7 @@
 /*
 Plugin Name: Fabio Chatbot Lite for Shop, Blog & Forums
 Description: AI ChatBot With Analytic Features
-Version: 1.3.1
+Version: 1.4.0
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
